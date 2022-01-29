@@ -2,7 +2,7 @@ package com.example.springcrud.service;
 
 
 import com.example.springcrud.model.Apartment;
-import com.example.springcrud.repository.ApartmentDAO;
+import com.example.springcrud.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,28 +11,32 @@ import java.util.List;
 @Service
 public class ApartmentService {
 
-	public final ApartmentDAO apartmentDAO;
+	public final ApartmentRepository apartmentRepository;
 
 	@Autowired
-	public ApartmentService(ApartmentDAO apartmentDAO) {
-		this.apartmentDAO = apartmentDAO;
+	public ApartmentService(ApartmentRepository apartmentRepository) {
+		this.apartmentRepository = apartmentRepository;
 	}
 
-	public Apartment create(Apartment apartment) {
-		Apartment apartmentResponce = apartmentDAO.create(apartment);
-		return apartmentResponce;
+
+	public Apartment findById(long id) {
+		Apartment apartment = apartmentRepository.getById(id);
+		return apartment;
 	}
 
-	public Apartment update(Apartment apartment, int id ) {
-		Apartment apartmentResponce = apartmentDAO.update(apartment, id );
-		return apartmentResponce;
+	public List<Apartment> findAll() {
+		List<Apartment> apartmentList = apartmentRepository.findAll();
+		return apartmentList;
 	}
-	public Apartment delete(int id ) {
-		Apartment apartmentResponce = apartmentDAO.delete(id);
-		return apartmentResponce;
+
+	public Apartment saveApartment(Apartment apartment) {
+		Apartment responseApartment = apartmentRepository.save(apartment);
+		return responseApartment;
 	}
-	public List<Apartment> getAll() {
-		List<Apartment> apartmentResponce = apartmentDAO.getAll();
-		return apartmentResponce;
+
+
+	public void deleteById(long id) {
+		apartmentRepository.deleteById(id);
 	}
+
 }

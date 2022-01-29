@@ -22,27 +22,30 @@ public class ApartmentController {
 
 	@GetMapping("/list")
 	public List<Apartment> getAllApartment() {
-		List<Apartment> apartments = apartmentService.getAll();
+		List<Apartment> apartments = apartmentService.findAll();
 		return apartments;
 	}
 
 
 	@PostMapping("/new")
 	public Apartment createApartment(@RequestBody Apartment apartment) {
-		Apartment apartmentResponce = apartmentService.create(apartment);
+		Apartment apartmentResponce = apartmentService.saveApartment(apartment);
 		return apartmentResponce;
 	}
 
 	@PutMapping("/edit/{id}")
-	public Apartment edit(@RequestBody Apartment apartment,@PathVariable int id) {
-		Apartment apartmentResponce = apartmentService.update(apartment,id);
+	public Apartment editApartment(@RequestBody Apartment apartment,@PathVariable long id) {
+		Apartment findedApartment = apartmentService.findById(id);
+		findedApartment.setCity(apartment.getCity());
+		findedApartment.setCountOfRoom(apartment.getCountOfRoom());
+		findedApartment.setPrice(apartment.getPrice());
+		Apartment apartmentResponce = apartmentService.saveApartment(findedApartment);
 		return apartmentResponce;
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public Apartment delete(@PathVariable int id) {
-		Apartment apartmentResponce = apartmentService.delete(id);
-		return apartmentResponce;
+	public void delete(@PathVariable long id) {
+		apartmentService.deleteById(id);
 	}
 
 
