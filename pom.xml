@@ -15,6 +15,7 @@
     <description>SpringCRUD</description>
     <properties>
         <java.version>11</java.version>
+        <sql.version>8.0.25</sql.version><!-- todo: move other lib versions to props it would be easier to change them and to track same versions-->
     </properties>
     <dependencies>
         <dependency>
@@ -24,7 +25,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.25</version>
+            <version>${sql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

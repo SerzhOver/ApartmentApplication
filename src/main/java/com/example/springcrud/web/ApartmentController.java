@@ -3,22 +3,17 @@ package com.example.springcrud.web;
 
 import com.example.springcrud.model.Apartment;
 import com.example.springcrud.service.ApartmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/apartment")
+@RequestMapping("/apartment") // it is a good practise to move path to a class with all path constants
 public class ApartmentController {
-
 	public final ApartmentService apartmentService;
-
-	@Autowired
-	public ApartmentController(ApartmentService apartmentService) {
-		this.apartmentService = apartmentService;
-	}
 
 	@GetMapping("/list")
 	public List<Apartment> getAllApartment() {
@@ -29,8 +24,8 @@ public class ApartmentController {
 
 	@PostMapping("/new")
 	public Apartment createApartment(@RequestBody Apartment apartment) {
-		Apartment apartmentResponce = apartmentService.saveApartment(apartment);
-		return apartmentResponce;
+		Apartment apartmentResponse = apartmentService.saveApartment(apartment);
+		return apartmentResponse;
 	}
 
 	@PutMapping("/edit/{id}")
@@ -39,14 +34,13 @@ public class ApartmentController {
 		findedApartment.setCity(apartment.getCity());
 		findedApartment.setCountOfRoom(apartment.getCountOfRoom());
 		findedApartment.setPrice(apartment.getPrice());
-		Apartment apartmentResponce = apartmentService.saveApartment(findedApartment);
-		return apartmentResponce;
+		Apartment apartmentResponse = apartmentService.saveApartment(findedApartment);
+		return apartmentResponse;
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public void delete(@PathVariable long id) {
 		apartmentService.deleteById(id);
 	}
-
 
 }

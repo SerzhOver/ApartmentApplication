@@ -5,11 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "apartments")
 public class Apartment {

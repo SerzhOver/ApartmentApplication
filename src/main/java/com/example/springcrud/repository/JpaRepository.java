@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface JpaRepository<T> extends CrudRepository<Apartment, Long> {
 
-	@Override
+	@Override// unnecessary annotations as far as you don't override here anything
 	void deleteById(Long aLong);
 
 	@Override

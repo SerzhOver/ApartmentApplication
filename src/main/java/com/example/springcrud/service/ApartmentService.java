@@ -3,20 +3,16 @@ package com.example.springcrud.service;
 
 import com.example.springcrud.model.Apartment;
 import com.example.springcrud.repository.ApartmentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor//looks better that explicit constructor)
 public class ApartmentService {
-
 	public final ApartmentRepository apartmentRepository;
-
-	@Autowired
-	public ApartmentService(ApartmentRepository apartmentRepository) {
-		this.apartmentRepository = apartmentRepository;
-	}
 
 
 	public Apartment findById(long id) {
