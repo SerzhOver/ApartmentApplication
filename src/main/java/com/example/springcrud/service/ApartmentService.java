@@ -10,29 +10,27 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor//looks better that explicit constructor)
+@RequiredArgsConstructor
 public class ApartmentService {
-	public final ApartmentRepository apartmentRepository;
+    @Autowired
+    public final ApartmentRepository apartmentRepository;
 
 
-	public Apartment findById(long id) {
-		Apartment apartment = apartmentRepository.getById(id);
-		return apartment;
-	}
+    public Apartment findById(long id) {
+        return apartmentRepository.getById(id);
+    }
 
-	public List<Apartment> findAll() {
-		List<Apartment> apartmentList = apartmentRepository.findAll();
-		return apartmentList;
-	}
+    public List<Apartment> findAll() {
+        return apartmentRepository.findAll();
+    }
 
-	public Apartment saveApartment(Apartment apartment) {
-		Apartment responseApartment = apartmentRepository.save(apartment);
-		return responseApartment;
-	}
+    public Apartment saveApartment(Apartment apartment) {
+        return apartmentRepository.save(apartment);
+    }
 
 
-	public void deleteById(long id) {
-		apartmentRepository.deleteById(id);
-	}
+    public void deleteById(long id) {
+        apartmentRepository.deleteById(id);
+    }
 
 }

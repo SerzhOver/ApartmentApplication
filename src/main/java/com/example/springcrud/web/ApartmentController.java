@@ -4,43 +4,39 @@ package com.example.springcrud.web;
 import com.example.springcrud.model.Apartment;
 import com.example.springcrud.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/apartment") // it is a good practise to move path to a class with all path constants
+@RequestMapping("/apartment")
 public class ApartmentController {
-	public final ApartmentService apartmentService;
+    public final ApartmentService apartmentService;
 
-	@GetMapping("/list")
-	public List<Apartment> getAllApartment() {
-		List<Apartment> apartments = apartmentService.findAll();
-		return apartments;
-	}
+    @GetMapping("/list")
+    public List<Apartment> getAllApartment() {
+        return apartmentService.findAll();
+    }
 
 
-	@PostMapping("/new")
-	public Apartment createApartment(@RequestBody Apartment apartment) {
-		Apartment apartmentResponse = apartmentService.saveApartment(apartment);
-		return apartmentResponse;
-	}
+    @PostMapping("/new")
+    public Apartment createApartment(@RequestBody Apartment apartment) {
+        return apartmentService.saveApartment(apartment);
+    }
 
-	@PutMapping("/edit/{id}")
-	public Apartment editApartment(@RequestBody Apartment apartment,@PathVariable long id) {
-		Apartment findedApartment = apartmentService.findById(id);
-		findedApartment.setCity(apartment.getCity());
-		findedApartment.setCountOfRoom(apartment.getCountOfRoom());
-		findedApartment.setPrice(apartment.getPrice());
-		Apartment apartmentResponse = apartmentService.saveApartment(findedApartment);
-		return apartmentResponse;
-	}
+    @PutMapping("/edit/{id}")
+    public Apartment editApartment(@RequestBody Apartment apartment, @PathVariable long id) {
+        Apartment foundApartment = apartmentService.findById(id);
+        foundApartment.setCity(apartment.getCity());
+        foundApartment.setCountOfRoom(apartment.getCountOfRoom());
+        foundApartment.setPrice(apartment.getPrice());
+        return apartmentService.saveApartment(foundApartment);
+    }
 
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable long id) {
-		apartmentService.deleteById(id);
-	}
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable long id) {
+        apartmentService.deleteById(id);
+    }
 
 }
