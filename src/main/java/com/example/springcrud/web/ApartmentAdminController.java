@@ -10,22 +10,22 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/apartment")
-public class ApartmentController {
+@RequestMapping("management/apartment")
+public class ApartmentAdminController {
     public final ApartmentService apartmentService;
 
-    @GetMapping("/list")
+    @GetMapping
     public List<Apartment> getAllApartment() {
         return apartmentService.findAll();
     }
 
 
-    @PostMapping("/new")
+    @PostMapping
     public Apartment createApartment(@RequestBody Apartment apartment) {
         return apartmentService.saveApartment(apartment);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("{id}")
     public Apartment editApartment(@RequestBody Apartment apartment, @PathVariable long id) {
         Apartment foundApartment = apartmentService.findById(id);
         foundApartment.setCity(apartment.getCity());
@@ -34,7 +34,7 @@ public class ApartmentController {
         return apartmentService.saveApartment(foundApartment);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable long id) {
         apartmentService.deleteById(id);
     }
