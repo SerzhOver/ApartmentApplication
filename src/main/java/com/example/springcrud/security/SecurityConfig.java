@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.GET, "/apartment/**").hasAnyRole(REALTOR.name(), ADMIN.name())
+                .antMatchers("/apartment/**").hasRole(REALTOR.name())
+                .antMatchers(HttpMethod.GET, "/management/apartment/**").hasRole(ADMIN.name())
                 .antMatchers(HttpMethod.DELETE, "/management/apartment/**").hasRole(ADMIN.name())
                 .antMatchers(HttpMethod.POST, "/management/apartment/**").hasRole(ADMIN.name())
                 .antMatchers(HttpMethod.PUT, "/management/apartment/**").hasRole(ADMIN.name())
@@ -50,13 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails alexUser = User.builder()
                 .username("alex")
                 .password(passwordEncoder.encode("pass"))
-                .roles(REALTOR.name())
+                .authorities(REALTOR.getGrantedAuthority())
                 .build();
 
         UserDetails serzhUser = User.builder()
                 .username("serzh")
                 .password(passwordEncoder.encode("admin"))
-                .roles(ADMIN.name())
+                .authorities(ADMIN.getGrantedAuthority())
                 .build();
 
         return new InMemoryUserDetailsManager(alexUser, serzhUser);
