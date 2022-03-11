@@ -17,7 +17,7 @@ public class ApartmentService {
 
 
     public Apartment findById(long id) {
-        return apartmentRepository.getById(id);
+        return apartmentRepository.findById(id).get();
     }
 
     public List<Apartment> findAll() {

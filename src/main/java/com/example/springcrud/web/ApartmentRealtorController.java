@@ -4,6 +4,7 @@ import com.example.springcrud.model.Apartment;
 import com.example.springcrud.service.ApartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +17,8 @@ public class ApartmentRealtorController {
 
     public final ApartmentService apartmentService;
 
-    @GetMapping
-    public List<Apartment> getAllApartment() {
-        return apartmentService.findAll();
+    @GetMapping({"{id}"})
+    public Apartment getApartment(@PathVariable  long id) {
+        return apartmentService.findById(id);
     }
 }
