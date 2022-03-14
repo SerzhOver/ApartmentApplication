@@ -1,32 +1,28 @@
 package com.example.springcrud.security;
 
+import com.example.springcrud.auth.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
-import static com.example.springcrud.security.Role.ADMIN;
-import static com.example.springcrud.security.Role.REALTOR;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
+    private final ApplicationUserService applicationUserService;
 
     @Autowired
-    public SecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public SecurityConfig(ApplicationUserService applicationUserService) {
+        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -35,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/apartment/**").hasRole(REALTOR.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,20 +39,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
     @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails alexUser = User.builder()
-                .username("alex")
-                .password(passwordEncoder.encode("pass"))
-                .authorities(REALTOR.getGrantedAuthority())
-                .build();
+    public PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
 
-        UserDetails serzhUser = User.builder()
-                .username("serzh")
-                .password(passwordEncoder.encode("admin"))
-                .authorities(ADMIN.getGrantedAuthority())
-                .build();
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return rawPassword.toString();
+            }
 
-        return new InMemoryUserDetailsManager(alexUser, serzhUser);
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                return true;
+            }
+        };
+    }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(applicationUserService);
+        return provider;
     }
 }
