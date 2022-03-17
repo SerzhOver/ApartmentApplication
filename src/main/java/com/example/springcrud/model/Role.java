@@ -1,4 +1,4 @@
-package com.example.springcrud.auth;
+package com.example.springcrud.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

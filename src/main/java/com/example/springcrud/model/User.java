@@ -1,5 +1,6 @@
-package com.example.springcrud.auth;
+package com.example.springcrud.model;
 
+import com.example.springcrud.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

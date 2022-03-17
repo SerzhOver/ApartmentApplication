@@ -1,5 +1,8 @@
-package com.example.springcrud.auth;
+package com.example.springcrud.service;
 
+import com.example.springcrud.auth.ApplicationUserDetails;
+import com.example.springcrud.repository.ApplicationUserRepository;
+import com.example.springcrud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
