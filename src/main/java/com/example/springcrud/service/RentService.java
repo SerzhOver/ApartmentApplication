@@ -29,7 +29,7 @@ public class RentService {
         Date end_rent = rentApartment.getEnd_rent();
         List<RentApartment> rentedApartments = rentRepository.findRentApartmentByDate(rentApartment.getId_apartment(), start_rent, end_rent);
 
-        if (start_rent.before(getCurrentDate()) || end_rent.before(getCurrentDate()) || start_rent.after(end_rent)) {
+        if (start_rent.before(new Date()) || end_rent.before(new Date()) || start_rent.after(end_rent)) {
                 throw new WrongDateException("Select the right date");
         }
 
@@ -39,10 +39,4 @@ public class RentService {
 
         return rentRepository.save(rentApartment);
     }
-
-    public Date getCurrentDate() {
-        return new Date();
-    }
-
-
 }
