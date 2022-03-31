@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("management/apartment")
 public class ApartmentAdminController {
-    public final ApartmentService apartmentService;
+    private final ApartmentService apartmentService;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ApartmentService {
-    @Autowired
-    public final ApartmentRepository apartmentRepository;
 
+    private final ApartmentRepository apartmentRepository;
+
+    @Autowired
+    public ApartmentService(ApartmentRepository apartmentRepository){
+        this.apartmentRepository = apartmentRepository;
+    }
 
     public Apartment findById(long id) {
         return apartmentRepository.findById(id).get();

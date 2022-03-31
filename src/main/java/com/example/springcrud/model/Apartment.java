@@ -3,6 +3,7 @@ package com.example.springcrud.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -26,6 +27,5 @@ public class Apartment {
 
     @Column(name = "room")
     private int countOfRoom;
-
 
 }
