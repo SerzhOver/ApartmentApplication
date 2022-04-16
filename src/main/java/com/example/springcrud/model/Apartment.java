@@ -1,9 +1,7 @@
 package com.example.springcrud.model;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.List;
 
 
 @Data

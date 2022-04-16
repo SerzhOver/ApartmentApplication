@@ -49,7 +49,6 @@ public class ApartmentTest {
     public void getApartmentTest() {
 
         Mockito.when(apartmentRepositoryMock.getById(anyLong())).thenReturn(apartment);
-
         Apartment foundedApartment = apartmentService.findById(1L);
 
         assertNotNull(foundedApartment);

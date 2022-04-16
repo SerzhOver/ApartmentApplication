@@ -12,8 +12,7 @@ import java.util.List;
 @Repository
 public interface RentRepository extends CrudRepository<RentApartment, Long> {
 
-    @Query(value = "SELECT * FROM rent_apartment  WHERE id=:id AND " +
-            "start_rent between :started and :ended OR end_rent between :started and :ended",nativeQuery = true)
+    @Query(value = "SELECT b  FROM RentApartment b WHERE b.id_apartment=:id AND b.start_rent between :started and :ended OR b.end_rent between :started and :ended")
     List<RentApartment> findRentApartmentByDate(@Param("id") long id_apartment,@Param("started") Date start, @Param("ended") Date end);
 
 }

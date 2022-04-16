@@ -3,7 +3,6 @@ package com.example.springcrud.service;
 
 import com.example.springcrud.model.Apartment;
 import com.example.springcrud.repository.ApartmentRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
