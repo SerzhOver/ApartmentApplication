@@ -12,24 +12,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("management/apartment")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ApartmentAdminController {
     private final ApartmentService apartmentService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Apartment> getAllApartment() {
         return apartmentService.findAll();
     }
 
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Apartment createApartment(@RequestBody Apartment apartment) {
         return apartmentService.saveApartment(apartment);
     }
 
     @PutMapping("{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Apartment editApartment(@RequestBody Apartment apartment, @PathVariable long id) {
         Apartment foundApartment = apartmentService.findById(id);
         foundApartment.setCity(apartment.getCity());
@@ -39,7 +37,6 @@ public class ApartmentAdminController {
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable long id) {
         apartmentService.deleteById(id);
     }

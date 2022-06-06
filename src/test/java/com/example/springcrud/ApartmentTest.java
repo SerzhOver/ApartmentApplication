@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -48,12 +49,12 @@ public class ApartmentTest {
     @Test
     public void getApartmentTest() {
 
-        Mockito.when(apartmentRepositoryMock.getById(anyLong())).thenReturn(apartment);
+        Mockito.when(apartmentRepositoryMock.findById(anyLong())).thenReturn(Optional.of(apartment));
         Apartment foundedApartment = apartmentService.findById(1L);
 
         assertNotNull(foundedApartment);
         assertEquals("Berlin", foundedApartment.getCity());
-        Mockito.verify(apartmentRepositoryMock, Mockito.times(1)).getById(1L);
+        Mockito.verify(apartmentRepositoryMock, Mockito.times(1)).findById(1L);
 
     }
 
@@ -76,7 +77,7 @@ public class ApartmentTest {
     @Test
     public void editApartmentTest() {
 
-        Mockito.when(apartmentRepositoryMock.getById(anyLong())).thenReturn(apartment);
+        Mockito.when(apartmentRepositoryMock.findById(anyLong())).thenReturn(Optional.of(apartment));
         Mockito.when(apartmentRepositoryMock.save(any(Apartment.class))).thenReturn(apartment);
 
         Apartment foundedApartment = apartmentService.findById(1L);

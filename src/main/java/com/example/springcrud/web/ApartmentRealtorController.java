@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("apartment")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_REALTOR')")
 public class ApartmentRealtorController {
 
     private final ApartmentService apartmentService;
     private final RentService rentService;
 
     @GetMapping({"{id}"})
-    @PreAuthorize("hasRole('ROLE_REALTOR')")
     public Apartment getApartment(@PathVariable long id) {
         return apartmentService.findById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_REALTOR')")
     public RentApartment createRentApartment(@RequestBody RentApartment rentApartment) {
         return rentService.saveRentApartment(rentApartment);
     }

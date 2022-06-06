@@ -24,7 +24,6 @@ public class RentTest {
     @Mock
     private RentRepository rentRepositoryMock;
 
-    private List<RentApartment> rentApartmentList;
     private RentApartment rentApartment;
 
     @BeforeEach
