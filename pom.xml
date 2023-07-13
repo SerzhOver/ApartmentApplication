@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <sql.version>8.0.25</sql.version>
+        <sql.version>42.6.0</sql.version>
         <spring-framework.version>5.3.15</spring-framework.version>
         <lombok.version>1.18.22</lombok.version>
         <json-webtoken.version>0.11.2</json-webtoken.version>
@@ -29,8 +29,8 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <version>${sql.version}</version>
         </dependency>
 
