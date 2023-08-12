@@ -13,22 +13,22 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "rent_apartment")
-public class RentApartment {
+@Table(name = "rented_apartments")
+public class RentedApartment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id_rent;
+    private long idRent;
 
     @Column(name = "id_apartment")
-    private long id_apartment;
+    private long idApartment;
 
     @Column(name = "start_rent")
     @Temporal(TemporalType.DATE)
-    private Date start_rent;
+    private Date startRent;
 
     @Column(name = "end_rent")
     @Temporal(TemporalType.DATE)
-    private Date end_rent;
+    private Date endRent;
 }

@@ -2,7 +2,7 @@ package com.example.springcrud.service;
 
 import com.example.springcrud.exception.ApartmentWasRentedException;
 import com.example.springcrud.exception.WrongDateException;
-import com.example.springcrud.model.RentApartment;
+import com.example.springcrud.model.RentedApartment;
 import com.example.springcrud.repository.RentRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,16 @@ public class RentService {
     }
 
     @SneakyThrows
-    public RentApartment saveRentApartment(RentApartment rentApartment) {
+    public RentedApartment saveRentedApartment(RentedApartment rentApartment) {
 
-        Date start_rent = rentApartment.getStart_rent();
-        Date end_rent = rentApartment.getEnd_rent();
-        List<RentApartment> rentedApartments = rentRepository.findRentApartmentByDate(rentApartment.getId_apartment(), start_rent, end_rent);
+        Date startRent = rentApartment.getStartRent();
+        Date endRent = rentApartment.getEndRent();
+        List<RentedApartment> rentedApartments = rentRepository.findRentApartmentByDate(rentApartment.getIdApartment(), startRent, endRent);
 
-        if (start_rent.before(new Date()) || end_rent.before(new Date()) || start_rent.after(end_rent)) {
-                throw new WrongDateException("Select the right date");
-        }
-
-        else if (!rentedApartments.isEmpty()) {
-                throw new ApartmentWasRentedException("Apartment was rented on this date!");
+        if (startRent.before(new Date()) || endRent.before(new Date()) || startRent.after(endRent)) {
+            throw new WrongDateException("Select the right date");
+        } else if (!rentedApartments.isEmpty()) {
+            throw new ApartmentWasRentedException("Apartment was rented on this date!");
         }
 
         return rentRepository.save(rentApartment);

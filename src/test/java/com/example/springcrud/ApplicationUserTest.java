@@ -7,7 +7,10 @@ import com.example.springcrud.repository.ApplicationUserRepository;
 import com.example.springcrud.service.ApplicationUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -17,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 
-public class ApplicationUserTest {
+class ApplicationUserTest {
 
     @InjectMocks
     private ApplicationUserService applicationUserService;
@@ -29,19 +32,19 @@ public class ApplicationUserTest {
     public void init() {
         MockitoAnnotations.openMocks(this);
         Set<Role> roles = new HashSet<>() {{
-            add(new Role(2L, "ADMIN"));
+            add(new Role(2L, "realtor"));
         }};
-        user =new User(2L, "Admin", "pass", roles);
+        user = new User(2L, "alex1382", "pass", roles);
     }
 
     @Test
-    public void loadUserTest() {
+    void loadUserTest() {
         Mockito.when(applicationUserRepositoryMock.findApplicationUserByUsername(anyString())).thenReturn(Optional.of(user));
 
         ApplicationUserDetails applicationUserDetailsForReturn = applicationUserService.loadUserByUsername(user.getUsername());
 
         assertNotNull(applicationUserDetailsForReturn);
-        assertEquals(applicationUserDetailsForReturn.getUsername(), "Admin");
+        assertEquals("alex1382", applicationUserDetailsForReturn.getUsername());
 
     }
 

@@ -1,11 +1,11 @@
 package com.example.springcrud.exception;
 
-public class ApartmentWasRentedException extends Exception{
+public class ApartmentWasRentedException extends Exception {
 
-    public ApartmentWasRentedException(){
+    public ApartmentWasRentedException() {
     }
 
-    public ApartmentWasRentedException(String message){
+    public ApartmentWasRentedException(String message) {
         super(message);
     }
 

@@ -1,6 +1,6 @@
 package com.example.springcrud.repository;
 
-import com.example.springcrud.model.RentApartment;
+import com.example.springcrud.model.RentedApartment;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface RentRepository extends CrudRepository<RentApartment, Long> {
+public interface RentRepository extends CrudRepository<RentedApartment, Long> {
 
-    @Query(value = "SELECT b  FROM RentApartment b WHERE b.id_apartment=:id AND b.start_rent between :started and :ended OR b.end_rent between :started and :ended")
-    List<RentApartment> findRentApartmentByDate(@Param("id") long id_apartment,@Param("started") Date start, @Param("ended") Date end);
+    @Query(value = "SELECT b  FROM RentedApartment b WHERE b.idApartment=:id AND b.startRent between :started and :ended OR b.endRent between :started and :ended")
+    List<RentedApartment> findRentApartmentByDate(@Param("id") long idApartment, @Param("started") Date start, @Param("ended") Date end);
 
 }

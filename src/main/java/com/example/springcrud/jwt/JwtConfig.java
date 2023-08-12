@@ -1,11 +1,7 @@
 package com.example.springcrud.jwt;
 
-import io.jsonwebtoken.security.Keys;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
 
 @Component
 @ConfigurationProperties(prefix = "application.jwt")
@@ -42,7 +38,7 @@ public class JwtConfig {
         this.tokenExpirationAfterDays = tokenExpirationAfterDays;
     }
 
-    public String getAuthorizationHeader(){
+    public String getAuthorizationHeader() {
         return "Authorization";
     }
 }

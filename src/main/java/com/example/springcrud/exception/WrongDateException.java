@@ -1,6 +1,6 @@
 package com.example.springcrud.exception;
 
-public class WrongDateException extends Exception{
+public class WrongDateException extends Exception {
 
     public WrongDateException() {
         super();

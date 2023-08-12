@@ -1,12 +1,10 @@
 package com.example.springcrud.jwt;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,9 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class JwtTokenVerifier extends OncePerRequestFilter {
@@ -38,31 +34,25 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String authorizationHeader = request.getHeader(jwtConfig.getAuthorizationHeader());
-        if ( !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
             filterChain.doFilter(request, response);
             return;
         }
+
         try {
             String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(), "");
 
-            Jws<Claims> claimsJws = Jwts.parserBuilder()
+            JwtParser jwtParser = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(token);
+                    .build();
 
+            Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
             Claims body = claimsJws.getBody();
 
             String username = body.getSubject();
+            Collection<? extends GrantedAuthority> authorities = extractAuthorities(body);
 
-            var authorities = (List<Map<String,String>>) body.get("authorities");
-
-            Set<SimpleGrantedAuthority> simpleGrantedAuthoritySet = authorities.stream()
-                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
-                    .collect(Collectors.toSet());
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(username,
-                    null, simpleGrantedAuthoritySet);
-
+            Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (JwtException e) {
@@ -70,5 +60,15 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private Collection<? extends GrantedAuthority> extractAuthorities(Claims claims) {
+        List<Map<String, String>> authorities = claims.get("authorities", List.class);
+        if (authorities == null) {
+            return Collections.emptyList();
+        }
+        return authorities.stream()
+                .map(m -> new SimpleGrantedAuthority(m.get("authority")))
+                .collect(Collectors.toList());
     }
 }

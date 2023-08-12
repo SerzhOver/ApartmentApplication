@@ -3,19 +3,23 @@ package com.example.springcrud;
 import com.example.springcrud.model.Apartment;
 import com.example.springcrud.repository.ApartmentRepository;
 import com.example.springcrud.service.ApartmentService;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
-public class ApartmentTest {
+class ApartmentTest {
 
     @InjectMocks
     private ApartmentService apartmentService;
@@ -36,7 +40,7 @@ public class ApartmentTest {
     }
 
     @Test
-    public void createApartmentTest() {
+    void createApartmentTest() {
 
         Mockito.when(apartmentRepositoryMock.save(any(Apartment.class))).thenReturn(apartment);
 
@@ -47,7 +51,7 @@ public class ApartmentTest {
     }
 
     @Test
-    public void getApartmentTest() {
+    void getApartmentTest() {
 
         Mockito.when(apartmentRepositoryMock.findById(anyLong())).thenReturn(Optional.of(apartment));
         Apartment foundedApartment = apartmentService.findById(1L);
@@ -59,7 +63,7 @@ public class ApartmentTest {
     }
 
     @Test
-    public void getAllApartmentTest() {
+    void getAllApartmentTest() {
 
         List<Apartment> testApartmentList = new ArrayList<>() {{
             add(apartment);
@@ -75,7 +79,7 @@ public class ApartmentTest {
     }
 
     @Test
-    public void editApartmentTest() {
+    void editApartmentTest() {
 
         Mockito.when(apartmentRepositoryMock.findById(anyLong())).thenReturn(Optional.of(apartment));
         Mockito.when(apartmentRepositoryMock.save(any(Apartment.class))).thenReturn(apartment);
@@ -90,7 +94,7 @@ public class ApartmentTest {
     }
 
     @Test
-    public void deleteApartmentTest() {
+    void deleteApartmentTest() {
 
         apartmentService.deleteById(1L);
         Mockito.verify(apartmentRepositoryMock, Mockito.times(1)).deleteById(anyLong());
