@@ -18,7 +18,8 @@ public class WrongDateException extends Exception {
         super(cause);
     }
 
-    protected WrongDateException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected WrongDateException(String message, Throwable cause, boolean enableSuppression,
+                                 boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

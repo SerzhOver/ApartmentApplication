@@ -1,16 +1,15 @@
 package com.example.springcrud.auth;
 
 import com.example.springcrud.model.User;
+import java.util.Collection;
+import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
 public class ApplicationUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public ApplicationUserDetails(User user) {
         this.user = user;
@@ -18,11 +17,10 @@ public class ApplicationUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return user.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
-                .collect(Collectors.toSet());
+            .stream()
+            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+            .collect(Collectors.toSet());
     }
 
     @Override

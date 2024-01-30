@@ -1,17 +1,16 @@
 package com.example.springcrud.model;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @Builder
-public class Apartment {
+public class RentDetails {
 
-    private String city;
-    private int price;
-    private int countOfRooms;
+    private long idApartment;
+    private Date startRent;
+    private Date endRent;
 }
