@@ -1,19 +1,26 @@
 package com.example.springcrud;
 
-import com.example.springcrud.model.RentedApartment;
-import com.example.springcrud.repository.RentRepository;
-import com.example.springcrud.service.RentService;
-import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import com.example.springcrud.entity.RentDetailsEntity;
+import com.example.springcrud.mapper.RentDetailsMapper;
+import com.example.springcrud.model.RentDetails;
+import com.example.springcrud.repository.RentRepository;
+import com.example.springcrud.service.RentService;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class RentTest {
 
@@ -22,38 +29,46 @@ class RentTest {
 
     @Mock
     private RentRepository rentRepositoryMock;
+    @Mock
+    private RentDetailsMapper rentDetailsMapper;
 
-    private RentedApartment rentedApartment;
+    private RentDetailsEntity rentDetailsEntity;
+    private RentDetails rentDetails;
 
     @BeforeEach
     public void init() {
-
         MockitoAnnotations.openMocks(this);
 
         Date start_rent;
         Date end_rent;
         Calendar calendar = new GregorianCalendar();
-        calendar.add(Calendar.DAY_OF_MONTH,2);
+        calendar.add(Calendar.DAY_OF_MONTH, 2);
         start_rent = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH,2);
+        calendar.add(Calendar.DAY_OF_MONTH, 2);
         end_rent = calendar.getTime();
 
-        rentedApartment = RentedApartment.builder()
-                .idRent(1L)
-                .idApartment(11L)
-                .startRent(start_rent)
-                .endRent(end_rent)
-                .build();
+        rentDetailsEntity = RentDetailsEntity.builder()
+            .id(1L)
+            .idApartment(11L)
+            .startRent(start_rent)
+            .endRent(end_rent)
+            .build();
+
+        rentDetails = RentDetails.builder()
+            .idApartment(11L)
+            .startRent(start_rent)
+            .endRent(end_rent)
+            .build();
     }
 
     @Test
-    void saveRentApartmentTest(){
+    void saveRentApartmentTest() {
+        when(rentRepositoryMock.findRentDetailsByDate(anyLong(), any(Date.class), any(Date.class)))
+            .thenReturn(new ArrayList<>());
+        when(rentRepositoryMock.save(any(RentDetailsEntity.class))).thenReturn(rentDetailsEntity);
 
-        Mockito.when(rentRepositoryMock.findRentApartmentByDate(anyLong(),any(Date.class),any(Date.class))).thenReturn(new ArrayList<>());
-        Mockito.when(rentRepositoryMock.save(any(RentedApartment.class))).thenReturn(rentedApartment);
+        rentService.saveRentDetails(rentDetails);
 
-        RentedApartment foundedRentedApartment = rentService.saveRentedApartment(rentedApartment);
-        assertNotNull(foundedRentedApartment);
-        assertEquals(11L, foundedRentedApartment.getIdApartment());
+        verify(rentRepositoryMock.save(any(RentDetailsEntity.class)));
     }
 }

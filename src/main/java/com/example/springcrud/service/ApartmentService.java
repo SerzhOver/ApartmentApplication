@@ -1,37 +1,46 @@
 package com.example.springcrud.service;
 
-
+import com.example.springcrud.mapper.ApartmentMapper;
 import com.example.springcrud.model.Apartment;
 import com.example.springcrud.repository.ApartmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
+@AllArgsConstructor
 public class ApartmentService {
 
-	private final ApartmentRepository apartmentRepository;
+    private final ApartmentRepository apartmentRepository;
+    private final ApartmentMapper apartmentMapper;
 
-	@Autowired
-	public ApartmentService(ApartmentRepository apartmentRepository) {
-		this.apartmentRepository = apartmentRepository;
-	}
+    public Apartment findApartmentById(long id) {
+        var apartmentEntity = apartmentRepository.findById(id).get();
+        return apartmentMapper.toDto(apartmentEntity);
+    }
 
-	public Apartment findById(long id) {
-		return apartmentRepository.findById(id).get();
-	}
+    public List<Apartment> findAllApartments() {
+        var apartmentEntityList = apartmentRepository.findAll();
+        return apartmentMapper.toDtoList(apartmentEntityList);
+    }
 
-	public List<Apartment> findAll() {
-		return apartmentRepository.findAll();
-	}
+    public void saveApartment(Apartment apartment) {
+        var apartmentEntity = apartmentMapper.toEntity(apartment);
+        apartmentRepository.save(apartmentEntity);
+    }
 
-	public Apartment saveApartment(Apartment apartment) {
-		return apartmentRepository.save(apartment);
-	}
+    public void updateApartment(Apartment apartment, long id) {
+        var apartmentEntityForUpdate = apartmentRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Can not find apartment by id: " + id));
 
+        apartmentEntityForUpdate.setCity(apartment.getCity());
+        apartmentEntityForUpdate.setCountOfRooms(apartment.getCountOfRooms());
+        apartmentEntityForUpdate.setPrice(apartment.getPrice());
 
-	public void deleteById(long id) {
-		apartmentRepository.deleteById(id);
-	}
+        apartmentRepository.save(apartmentEntityForUpdate);
+    }
+
+    public void deleteById(long id) {
+        apartmentRepository.deleteById(id);
+    }
 }
