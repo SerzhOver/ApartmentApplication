@@ -2,9 +2,9 @@ package com.example.springcrud.service;
 
 import com.example.springcrud.exception.ApartmentWasRentedException;
 import com.example.springcrud.exception.WrongDateException;
-import com.example.springcrud.mapper.RentDetailsMapper;
 import com.example.springcrud.model.RentDetails;
-import com.example.springcrud.repository.RentRepository;
+import com.example.springcrud.persistence.mapper.RentDetailsMapper;
+import com.example.springcrud.persistence.repository.RentRepository;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;

@@ -1,4 +1,4 @@
-package com.example.springcrud.jwt;
+package com.example.springcrud.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

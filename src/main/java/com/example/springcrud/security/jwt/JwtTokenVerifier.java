@@ -1,22 +1,28 @@
-package com.example.springcrud.jwt;
+package com.example.springcrud.security.jwt;
 
-
-import io.jsonwebtoken.*;
+import com.example.springcrud.config.JwtConfig;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.crypto.SecretKey;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import javax.crypto.SecretKey;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
@@ -43,8 +49,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(), "");
 
             JwtParser jwtParser = Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build();
+                .setSigningKey(secretKey)
+                .build();
 
             Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
             Claims body = claimsJws.getBody();
@@ -68,7 +74,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             return Collections.emptyList();
         }
         return authorities.stream()
-                .map(m -> new SimpleGrantedAuthority(m.get("authority")))
-                .collect(Collectors.toList());
+            .map(m -> new SimpleGrantedAuthority(m.get("authority")))
+            .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,6 @@
-package com.example.springcrud.repository;
+package com.example.springcrud.persistence.repository;
 
-import com.example.springcrud.entity.RentDetailsEntity;
+import com.example.springcrud.persistence.entity.RentDetailsEntity;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

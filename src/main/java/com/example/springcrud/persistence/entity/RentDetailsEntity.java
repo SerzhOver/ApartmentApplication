@@ -1,4 +1,4 @@
-package com.example.springcrud.entity;
+package com.example.springcrud.persistence.entity;
 
 import java.util.Date;
 import javax.persistence.Column;

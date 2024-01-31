@@ -1,4 +1,4 @@
-package com.example.springcrud.entity;
+package com.example.springcrud.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,21 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
-@Table(name = "apartments")
-public class ApartmentEntity {
+@Table(name = "roles")
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "price")
-    private int price;
-
-    @Column(name = "room")
-    private int countOfRooms;
+    @Column(name = "role")
+    private String role;
 }

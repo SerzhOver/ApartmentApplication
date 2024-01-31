@@ -1,9 +1,9 @@
 package com.example.springcrud.service;
 
-import com.example.springcrud.auth.ApplicationUserDetails;
-import com.example.springcrud.entity.UserEntity;
-import com.example.springcrud.mapper.UserMapper;
-import com.example.springcrud.repository.ApplicationUserRepository;
+import com.example.springcrud.persistence.entity.UserEntity;
+import com.example.springcrud.persistence.mapper.UserMapper;
+import com.example.springcrud.persistence.repository.ApplicationUserRepository;
+import com.example.springcrud.security.ApplicationUserDetails;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;

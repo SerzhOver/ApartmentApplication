@@ -1,16 +1,13 @@
 package com.example.springcrud;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.springcrud.entity.RentDetailsEntity;
-import com.example.springcrud.mapper.RentDetailsMapper;
 import com.example.springcrud.model.RentDetails;
-import com.example.springcrud.repository.RentRepository;
+import com.example.springcrud.persistence.entity.RentDetailsEntity;
+import com.example.springcrud.persistence.repository.RentRepository;
 import com.example.springcrud.service.RentService;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,15 +19,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class RentTest {
+class RentServiceTest {
 
     @InjectMocks
-    private RentService rentService;
+    private RentService fixture;
 
     @Mock
     private RentRepository rentRepositoryMock;
-    @Mock
-    private RentDetailsMapper rentDetailsMapper;
 
     private RentDetailsEntity rentDetailsEntity;
     private RentDetails rentDetails;
@@ -67,7 +62,7 @@ class RentTest {
             .thenReturn(new ArrayList<>());
         when(rentRepositoryMock.save(any(RentDetailsEntity.class))).thenReturn(rentDetailsEntity);
 
-        rentService.saveRentDetails(rentDetails);
+        fixture.saveRentDetails(rentDetails);
 
         verify(rentRepositoryMock.save(any(RentDetailsEntity.class)));
     }
