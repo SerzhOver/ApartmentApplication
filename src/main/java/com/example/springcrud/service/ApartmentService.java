@@ -1,8 +1,8 @@
 package com.example.springcrud.service;
 
-import com.example.springcrud.mapper.ApartmentMapper;
 import com.example.springcrud.model.Apartment;
-import com.example.springcrud.repository.ApartmentRepository;
+import com.example.springcrud.persistence.mapper.ApartmentMapper;
+import com.example.springcrud.persistence.repository.ApartmentRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

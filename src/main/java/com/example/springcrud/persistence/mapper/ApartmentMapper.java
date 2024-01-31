@@ -1,7 +1,7 @@
-package com.example.springcrud.mapper;
+package com.example.springcrud.persistence.mapper;
 
-import com.example.springcrud.entity.ApartmentEntity;
 import com.example.springcrud.model.Apartment;
+import com.example.springcrud.persistence.entity.ApartmentEntity;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

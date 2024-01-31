@@ -1,6 +1,6 @@
-package com.example.springcrud.repository;
+package com.example.springcrud.persistence.repository;
 
-import com.example.springcrud.entity.ApartmentEntity;
+import com.example.springcrud.persistence.entity.ApartmentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.example.springcrud.entity;
+package com.example.springcrud.persistence.entity;
 
 import java.util.Set;
 import javax.persistence.CascadeType;

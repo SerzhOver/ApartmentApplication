@@ -1,11 +1,10 @@
-package com.example.springcrud.security;
+package com.example.springcrud.config;
 
-import com.example.springcrud.jwt.JwtConfig;
-import com.example.springcrud.jwt.JwtTokenVerifier;
-import com.example.springcrud.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import com.example.springcrud.security.jwt.JwtTokenVerifier;
+import com.example.springcrud.security.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import com.example.springcrud.service.ApplicationUserService;
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,20 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ApplicationUserService applicationUserService;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
-
-    @Autowired
-    public SecurityConfig(ApplicationUserService applicationUserService,
-                          JwtConfig jwtConfig,
-                          SecretKey secretKey) {
-        this.applicationUserService = applicationUserService;
-        this.jwtConfig = jwtConfig;
-        this.secretKey = secretKey;
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {

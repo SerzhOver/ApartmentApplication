@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import com.example.springcrud.auth.ApplicationUserDetails;
-import com.example.springcrud.entity.RoleEntity;
-import com.example.springcrud.entity.UserEntity;
-import com.example.springcrud.repository.ApplicationUserRepository;
+import com.example.springcrud.security.ApplicationUserDetails;
+import com.example.springcrud.persistence.entity.RoleEntity;
+import com.example.springcrud.persistence.entity.UserEntity;
+import com.example.springcrud.persistence.repository.ApplicationUserRepository;
 import com.example.springcrud.service.ApplicationUserService;
 import java.util.HashSet;
 import java.util.Optional;
@@ -19,10 +19,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class ApplicationUserTest {
+class ApplicationUserServiceTest {
 
     @InjectMocks
-    private ApplicationUserService applicationUserService;
+    private ApplicationUserService fixture;
 
     @Mock
     private ApplicationUserRepository applicationUserRepositoryMock;
@@ -42,7 +42,7 @@ class ApplicationUserTest {
         when(applicationUserRepositoryMock.findApplicationUserByUsername(anyString()))
             .thenReturn(Optional.of(userEntity));
 
-        ApplicationUserDetails applicationUserDetailsForReturn = applicationUserService.loadUserByUsername(
+        ApplicationUserDetails applicationUserDetailsForReturn = fixture.loadUserByUsername(
             userEntity.getUsername());
 
         assertNotNull(applicationUserDetailsForReturn);

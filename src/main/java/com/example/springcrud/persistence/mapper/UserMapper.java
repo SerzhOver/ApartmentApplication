@@ -1,7 +1,7 @@
-package com.example.springcrud.mapper;
+package com.example.springcrud.persistence.mapper;
 
-import com.example.springcrud.entity.UserEntity;
 import com.example.springcrud.model.User;
+import com.example.springcrud.persistence.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants.ComponentModel;
 

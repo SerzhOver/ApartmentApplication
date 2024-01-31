@@ -7,10 +7,10 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.springcrud.entity.ApartmentEntity;
-import com.example.springcrud.mapper.ApartmentMapper;
+import com.example.springcrud.persistence.entity.ApartmentEntity;
+import com.example.springcrud.persistence.mapper.ApartmentMapper;
 import com.example.springcrud.model.Apartment;
-import com.example.springcrud.repository.ApartmentRepository;
+import com.example.springcrud.persistence.repository.ApartmentRepository;
 import com.example.springcrud.service.ApartmentService;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-class ApartmentTest {
+class ApartmentServiceTest {
 
     @InjectMocks
-    private ApartmentService apartmentService;
+    private ApartmentService fixture;
 
     @Mock
     private ApartmentRepository apartmentRepositoryMock;
@@ -63,7 +63,7 @@ class ApartmentTest {
     void saveApartmentTest() {
         when(apartmentMapper.toEntity(any(Apartment.class))).thenReturn(apartmentEntity);
 
-        apartmentService.saveApartment(apartment);
+        fixture.saveApartment(apartment);
 
         verify(apartmentRepositoryMock).save(any(ApartmentEntity.class));
     }
@@ -73,7 +73,7 @@ class ApartmentTest {
         when(apartmentRepositoryMock.findById(anyLong())).thenReturn(Optional.of(apartmentEntity));
         when(apartmentMapper.toDto(any(ApartmentEntity.class))).thenReturn(apartment);
 
-        Apartment foundedApartment = apartmentService.findApartmentById(1L);
+        Apartment foundedApartment = fixture.findApartmentById(1L);
 
         assertNotNull(foundedApartment);
         assertEquals("Berlin", foundedApartment.getCity());
@@ -91,7 +91,7 @@ class ApartmentTest {
 
         when(apartmentRepositoryMock.findAll()).thenReturn(testApartmentListEntity);
 
-        List<Apartment> apartmentList = apartmentService.findAllApartments();
+        List<Apartment> apartmentList = fixture.findAllApartments();
 
         assertNotNull(apartmentList);
         assertEquals(2, apartmentList.size());
@@ -102,17 +102,17 @@ class ApartmentTest {
         when(apartmentRepositoryMock.findById(anyLong())).thenReturn(Optional.of(apartmentEntity));
         when(apartmentRepositoryMock.save(any(ApartmentEntity.class))).thenReturn(apartmentEntity);
 
-        Apartment foundedApartment = apartmentService.findApartmentById(1L);
+        Apartment foundedApartment = fixture.findApartmentById(1L);
         foundedApartment.setCity("Gdansk");
 
-        apartmentService.saveApartment(foundedApartment);
+        fixture.saveApartment(foundedApartment);
 
         verify(apartmentRepositoryMock.save(any(ApartmentEntity.class)));
     }
 
     @Test
     void deleteApartmentTest() {
-        apartmentService.deleteById(1L);
+        fixture.deleteById(1L);
         Mockito.verify(apartmentRepositoryMock, Mockito.times(1)).deleteById(anyLong());
     }
 }
